@@ -47,7 +47,7 @@ public class FoodController {
 	}
 	
 	
-	@GetMapping("/{id}")
+	@GetMapping("/foodId/{id}")
 	public ResponseEntity<?> getFoodById(@PathVariable("id") Integer id) throws IdNotFoundException {
 
 		Food foodDetails = foodService.getFoodById(id);
@@ -72,7 +72,7 @@ public class FoodController {
 	}
 	
 	
-	@GetMapping
+	@GetMapping("/allFood")
 	public ResponseEntity<?> getAllFoodDetails() {
 		
 		Optional<List<Food>> allFoodDetails = foodService.getAllFoodDetails();
@@ -80,10 +80,10 @@ public class FoodController {
 	}
 	
 	
-	@GetMapping("/{foodType}")
-	public ResponseEntity<?> getFoodDetailsByType(@PathVariable("foodType") EFOOD foodType) throws FoodTypeNotFoundException {
+	@GetMapping("/foodType/{foodType}")
+	public ResponseEntity<?> getFoodDetailsByType(@PathVariable("foodType") String foodType) throws FoodTypeNotFoundException {
 		
-		Optional<List<Food>> foodDetailsByType = foodRepository.findByFoodType(foodType);
+		Optional<List<Food>> foodDetailsByType = foodService.getFoodByType(foodType);
 		return ResponseEntity.ok(foodDetailsByType.get());
 	}
 	

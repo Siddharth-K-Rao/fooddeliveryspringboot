@@ -31,9 +31,9 @@ public class ExceptionAdvice {
 	}
 	
 	@ExceptionHandler(FoodTypeNotFoundException.class)
-	public ResponseEntity<?> foodTypeNotFoundException() {
+	public ResponseEntity<?> foodTypeNotFoundException(FoodTypeNotFoundException e) {
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("Message", "Sorry, Food Type Not Found");
+		map.put("Message", e.getMessage());
 		return ResponseEntity.badRequest().body(map);
 	}
 	

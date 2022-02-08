@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.learning.dto.EFOOD;
 import com.learning.dto.Food;
+import com.learning.exception.FoodTypeNotFoundException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.repository.FoodRepository;
 import com.learning.service.FoodService;
@@ -82,6 +84,18 @@ public class FoodServiceImpl implements FoodService {
 	public Optional<List<Food>> getAllFoodDetails() {
 		
 		return Optional.ofNullable(foodRepository.findAll());
+	}
+
+
+	@Override
+	public Optional<List<Food>> getFoodByType(String foodType) throws FoodTypeNotFoundException {
+		
+		Optional<List<Food>> foodDetailsByType = foodRepository.findByFoodType(EFOOD.valueOf(foodType));
+		
+		if(foodDetailsByType.get().isEmpty()) {
+			throw new FoodTypeNotFoundException("Sorry, Food Type Not Found");
+		}
+		return foodDetailsByType;
 	}
 
 }

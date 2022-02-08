@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.learning.dto.Login;
 import com.learning.dto.Register;
 import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.repository.UserRepository;
+import com.learning.service.LoginService;
 import com.learning.service.UserService;
 
 @Service
@@ -18,6 +20,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private LoginService loginService;
 	
 	
 	
@@ -35,7 +40,17 @@ public class UserServiceImpl implements UserService {
 		
 		if(addRegister != null) {
 			
-			return addRegister;
+			Login login = new Login(register.getEmail(), register.getPassword());
+			String result = loginService.addCredentials(login);
+			System.out.println(login);
+			
+			if(result.equals("Success"))
+			{
+				return addRegister;
+			}
+			else {
+				return null;
+			}
 		}
 		else {
 			return null;

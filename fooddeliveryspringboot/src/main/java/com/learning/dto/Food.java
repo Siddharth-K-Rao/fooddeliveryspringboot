@@ -39,7 +39,6 @@ public class Food implements Comparable<Food>{
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 30)
-	@NotBlank
 	private EFOOD foodType;
 	
 	@NotBlank
