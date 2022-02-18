@@ -38,7 +38,7 @@ public class FoodController {
 	FoodRepository foodRepository = null;
 	
 	
-	
+	// Adding new food details
 	@PostMapping("/addFood")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addFood(@Valid @RequestBody Food food) {
@@ -50,6 +50,7 @@ public class FoodController {
 	}
 	
 	
+	// Retrieving food details based on their ID
 	@GetMapping("/foodId/{id}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getFoodById(@PathVariable("id") Integer id) throws IdNotFoundException {
@@ -59,6 +60,7 @@ public class FoodController {
 	}
 	
 	
+	// Updating food details based on the ID
 	@PutMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateFoodDetails(@PathVariable("id") Integer id, @Valid @RequestBody Food updateFoodDetails) throws IdNotFoundException {
@@ -77,6 +79,7 @@ public class FoodController {
 	}
 	
 	
+	// Retrieving all food details
 	@GetMapping("/allFood")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getAllFoodDetails() {
@@ -86,6 +89,7 @@ public class FoodController {
 	}
 	
 	
+	// Retrieving food details based on their type
 	@GetMapping("/foodType/{foodType}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getFoodDetailsByType(@PathVariable("foodType") String foodType) throws FoodTypeNotFoundException {
@@ -95,6 +99,7 @@ public class FoodController {
 	}
 	
 	
+	// Deleting food details
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteFoodByID(@PathVariable("id") Integer id) throws IdNotFoundException {

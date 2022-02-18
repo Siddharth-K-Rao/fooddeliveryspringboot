@@ -13,7 +13,6 @@ public interface UserRepository extends JpaRepository<Register, Long> {
 	// Used for duplication check
 	Boolean existsByEmail(String email);
 	
-	// Used for authentication check
 	Boolean existsByEmailAndPassword(String email, String password);
 	
 	Optional<Register> findByUsername(String username);

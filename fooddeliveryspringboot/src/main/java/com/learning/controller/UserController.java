@@ -68,6 +68,7 @@ public class UserController {
 	AuthenticationManager authenticationManager;
 
 	
+	// User authentication is handled here
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -97,6 +98,7 @@ public class UserController {
 	}
 	
 	
+	// Registering the new user, provided same username and email do not exist
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
 
@@ -148,6 +150,7 @@ public class UserController {
 	}
 
 	
+	// Retrieving all user details
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getAllUserDetails() {
@@ -163,6 +166,7 @@ public class UserController {
 	}
 
 	
+	// Retrieving user details based on their ID
 	@GetMapping("/users/{id}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getUserById(@PathVariable("id") Long id) throws IdNotFoundException {
@@ -172,6 +176,7 @@ public class UserController {
 	}
 
 	
+	// Updating user details
 	@PutMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateUserDetails(@PathVariable("id") Long id,
@@ -189,6 +194,7 @@ public class UserController {
 	}
 
 	
+	// Deleting user details
 	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteUserByID(@PathVariable("id") Long id) throws IdNotFoundException {
