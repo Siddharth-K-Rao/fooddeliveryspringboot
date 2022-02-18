@@ -40,17 +40,18 @@ public class UserServiceImpl implements UserService {
 		
 		if(addRegister != null) {
 			
-			Login login = new Login(register.getEmail(), register.getPassword());
-			String result = loginService.addCredentials(login);
-			System.out.println(login);
-			
-			if(result.equals("Success"))
-			{
-				return addRegister;
-			}
-			else {
-				return null;
-			}
+//			Login login = new Login(register.getEmail(), register.getPassword());
+//			String result = loginService.addCredentials(login);
+//			System.out.println(login);
+//			
+//			if(result.equals("Success"))
+//			{
+//				return addRegister;
+//			}
+//			else {
+//				return null;
+//			}
+			return register;
 		}
 		else {
 			return null;
@@ -60,12 +61,12 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public Register getUserById(Integer id) throws IdNotFoundException {
+	public Register getUserById(Long id) throws IdNotFoundException {
 		
 		Optional<Register> optional =  userRepository.findById(id);
 		
 		if(optional.isEmpty()) {
-			throw new IdNotFoundException("Sorry, User with " + Integer.toString(id) + " not found");
+			throw new IdNotFoundException("Sorry, User with " + Long.toString(id) + " not found");
 		}
 		else {
 			return optional.get();
@@ -74,21 +75,21 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public String updateUser(Integer id, Register register) {
+	public String updateUser(Long id, Register register) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
 	@Override
-	public String deleteUserById(Integer id) throws IdNotFoundException {
+	public String deleteUserById(Long id) throws IdNotFoundException {
 		
 		Register userRecord = null;
 		
 		try {
 			userRecord = this.getUserById(id);
 			if(userRecord == null) {
-				throw new IdNotFoundException("Sorry, User with " + Integer.toString(id) + " not found");
+				throw new IdNotFoundException("Sorry, User with " + Long.toString(id) + " not found");
 			}
 			else {
 				userRepository.deleteById(id);
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
 		catch (IdNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new IdNotFoundException("Sorry, User with " + Integer.toString(id) + " not found");
+			throw new IdNotFoundException("Sorry, User with " + Long.toString(id) + " not found");
 		}
 	}
 

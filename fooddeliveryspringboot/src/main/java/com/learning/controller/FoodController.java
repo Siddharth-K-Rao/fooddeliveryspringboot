@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.learning.dto.EFOOD;
 import com.learning.dto.Food;
 import com.learning.exception.FoodTypeNotFoundException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.repository.FoodRepository;
 import com.learning.service.FoodService;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/food")
+@RequestMapping("/api/food")
 public class FoodController {
 
 	@Autowired
@@ -38,6 +40,7 @@ public class FoodController {
 	
 	
 	@PostMapping("/addFood")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addFood(@Valid @RequestBody Food food) {
 
 		Food result = foodService.addFood(food);
@@ -48,6 +51,7 @@ public class FoodController {
 	
 	
 	@GetMapping("/foodId/{id}")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getFoodById(@PathVariable("id") Integer id) throws IdNotFoundException {
 
 		Food foodDetails = foodService.getFoodById(id);
@@ -56,6 +60,7 @@ public class FoodController {
 	
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateFoodDetails(@PathVariable("id") Integer id, @Valid @RequestBody Food updateFoodDetails) throws IdNotFoundException {
 		
 		Food foodDetails = foodService.getFoodById(id);
@@ -73,6 +78,7 @@ public class FoodController {
 	
 	
 	@GetMapping("/allFood")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getAllFoodDetails() {
 		
 		Optional<List<Food>> allFoodDetails = foodService.getAllFoodDetails();
@@ -81,6 +87,7 @@ public class FoodController {
 	
 	
 	@GetMapping("/foodType/{foodType}")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getFoodDetailsByType(@PathVariable("foodType") String foodType) throws FoodTypeNotFoundException {
 		
 		Optional<List<Food>> foodDetailsByType = foodService.getFoodByType(foodType);
@@ -89,6 +96,7 @@ public class FoodController {
 	
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteFoodByID(@PathVariable("id") Integer id) throws IdNotFoundException {
 
 		String result = foodService.deleteFoodById(id);
